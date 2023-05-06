@@ -1,49 +1,33 @@
 {
   "project_info": {
-    "project_number": "705196729007",
-    "project_id": "motel-room-94f0d",
-    "storage_bucket": "motel-room-94f0d.appspot.com"
+    "project_number": "231293123337",
+    "project_id": "test-e386e",
+    "storage_bucket": "test-e386e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:705196729007:android:dbf7631646bd34622b2a5a",
+        "mobilesdk_app_id": "1:231293123337:android:520ce2ad125f912688b1d8",
         "android_client_info": {
           "package_name": "com.motelroom"
         }
       },
       "oauth_client": [
         {
-          "client_id": "705196729007-de0vtcl6rf8d4kb6r24k28ih7glk1gd1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.motelroom",
-            "certificate_hash": "7f8978db7dbc268837266aea86bed35c042698bd"
-          }
-        },
-        {
-          "client_id": "705196729007-utk1lr4v46blfndej20s16u98abccc4t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.motelroom",
-            "certificate_hash": "21ae39fc194cdb1bc8b92b0890a0803bade4724e"
-          }
-        },
-        {
-          "client_id": "705196729007-i1rbmb4a3ohkqktrh94l6mpq3kf6ql52.apps.googleusercontent.com",
+          "client_id": "231293123337-6jjd99dlpahub5gtgh4hma1oc8087rj4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFCIEiMYI5-Zd04uUw2Uhfla-RmmSdLdg"
+          "current_key": "AIzaSyCcegGDdFSrXeGDvLKKWuPspVrLomJZ-Rs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "705196729007-i1rbmb4a3ohkqktrh94l6mpq3kf6ql52.apps.googleusercontent.com",
+              "client_id": "231293123337-6jjd99dlpahub5gtgh4hma1oc8087rj4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
