@@ -214,6 +214,16 @@ android {
             include (*reactNativeArchitectures())
         }
     }
+
+    signingConfigs {
+        debug {
+            storeFile file('my-upload-key.keystore')
+            storePassword '123456'
+            keyAlias 'my-key-alias'
+            keyPassword '123456'
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -247,11 +257,13 @@ android {
         }
     }
 }
-plugins {
-  id 'com.android.application'
-  // Add the Google services Gradle plugin
-  id 'com.google.gms.google-services'
-}
+
+// plugins {
+//   id 'com.android.application'
+//   // Add the Google services Gradle plugin
+//   id 'com.google.gms.google-services'
+// }
+
 dependencies {
     implementation project(':lottie-react-native')
     implementation project(':react-native-vector-icons')

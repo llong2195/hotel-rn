@@ -213,7 +213,6 @@ class ApiHelper extends Emitter {
     const response = await fetch(url, {
       method: 'POST',
       mode: 'no-cors',
-      cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'multipart/form-data',

@@ -1,5 +1,5 @@
 export default class Configuration {
-  static API_URL = 'http://192.168.1.29:3000';
+  static API_URL = 'http://192.168.110.136:3000';
   static UPLOAD_URL = '';
   static DEV_MODE = true;
   static UPLOADE_IMAGE_API_KEY = '000023d4e8ecfa8a09b4e86152e64964';
