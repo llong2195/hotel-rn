@@ -22,7 +22,7 @@ const InfomationScreen = () => {
           }}
         />
         <TextBase
-          title={'Đây là sản phầm đồ án tốt nghiệp'}
+          title={'Đây là sản phầm đồ án thực tập'}
           style={{
             fontWeight: '400',
             fontSize: verticalScale(18),
@@ -39,7 +39,7 @@ const InfomationScreen = () => {
           }}
         />
         <TextBase
-          title={'Đại học Thuỷ Lợi'}
+          title={'Đại học Điện Lực'}
           style={{
             fontWeight: '400',
             fontSize: verticalScale(18),
@@ -53,15 +53,15 @@ const InfomationScreen = () => {
           }}
         >
           <TextBase
-            title={'Sinh viên: Đặng Minh Tâm'}
+            title={'Sinh viên: Nguyễn Duy Long'}
             style={{fontWeight: '400', fontSize: verticalScale(16)}}
           />
           <TextBase
-            title={'MSV: 1851060083'}
+            title={'MSV: 19810310054'}
             style={{fontWeight: '400', fontSize: verticalScale(16)}}
           />
           <TextBase
-            title={'Lớp: 60TH3'}
+            title={'Lớp: D14CNPM1'}
             style={{fontWeight: '400', fontSize: verticalScale(16)}}
           />
         </View>
