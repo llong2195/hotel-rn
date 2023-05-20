@@ -1,5 +1,5 @@
 //Setup Tutorial https://www.reactnativeschool.com/install-and-use-reactotron-for-debugging
-import Reactotron from "reactotron-react-native";
+import Reactotron from 'reactotron-react-native';
 
 const dev = __DEV__;
 
