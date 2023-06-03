@@ -1,6 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 import BaseButton from '../../../components/BaseButton';
 import DropdownList from '../../../components/DropdownList';
@@ -8,14 +13,21 @@ import HeaderView from '../../../components/HeaderView';
 import Icon from '../../../components/Icon';
 import InputBase from '../../../components/InputBase';
 import R from '../../../components/R';
-import {verticalScale} from '../../../components/Scales';
+import { verticalScale } from '../../../components/Scales';
 import TextBase from '../../../components/TextBase';
 import TextInputBase from '../../../components/TextInputBase';
-import {colors, PostTypes} from '../../../constants';
-import {PostType} from '../../../entities/DataType';
+import {
+  colors,
+  PostTypes,
+} from '../../../constants';
+import { Districts } from '../../../constants/Data/Districts';
+import { Provinces } from '../../../constants/Data/Province';
+import { PostType } from '../../../entities/DataType';
+import { District } from '../../../entities/District';
+import { Province } from '../../../entities/Province';
 import NavigationService from '../../../navigation/NavigationService';
-import {routes} from '../../../navigation/Routes';
-import {getMoneyFormat} from '../../../utils/UtilsMoney';
+import { routes } from '../../../navigation/Routes';
+import { getMoneyFormat } from '../../../utils/UtilsMoney';
 
 const SearchAdvanceScreen = () => {
   // const [province, setProvince] = useState<Province>();
@@ -28,6 +40,8 @@ const SearchAdvanceScreen = () => {
   const [postType, setPostType] = useState<PostType>();
   const [shortTitle, setShortTitle] = useState<string | undefined>(undefined);
   const [address, setAddress] = useState<string | undefined>(undefined);
+  const [province, setProvince] = useState<any>(null);
+  const [city, setCity] = useState<any>(null);
   // useEffect(() => {
   //   let district = Districts.filter((dis: District) => dis.provinceId == province?.id)
   //   setDistrictList(district)
@@ -42,7 +56,7 @@ const SearchAdvanceScreen = () => {
       // provinceId: province?.id,
       // districtId: district?.id,
       // communeId: commune?.id,
-      address: address || undefined,
+      address: `${province?.name ? province?.name : ''}, ${city?.name ? city?.name : ''}` || undefined,
       title: shortTitle || undefined,
       minPrice: minPrice?.split(/[,.\s]/).join('') || undefined,
       maxPrice: maxPrice?.split(/[,.\s]/).join('') || undefined,
@@ -80,7 +94,7 @@ const SearchAdvanceScreen = () => {
             onSelect={(index: number, item: PostType) => {
               setPostType(item);
             }}
-            touchStyle={{width: '100%', alignSelf: 'center'}}
+            touchStyle={{ width: '100%', alignSelf: 'center' }}
             viewStyle={{
               width: '100%',
               height: verticalScale(375),
@@ -95,7 +109,7 @@ const SearchAdvanceScreen = () => {
                 marginTop: verticalScale(30),
               }}
               initValue={''}
-              onFocus={() => {}}
+              onFocus={() => { }}
               placeholder={'Tất cả'}
               type={'NORMAL'}
               iconRight={() => {
@@ -110,16 +124,16 @@ const SearchAdvanceScreen = () => {
                 postType ? (
                   <TextBase
                     title={postType?.name}
-                    style={{color: colors.textColor}}
+                    style={{ color: colors.textColor }}
                   />
                 ) : (
                   <TextBase
                     title={'Tất cả'}
-                    style={{color: colors.borderColor}}
+                    style={{ color: colors.borderColor }}
                   />
                 )
               }
-              pressIconRight={() => {}}
+              pressIconRight={() => { }}
             />
           </DropdownList>
           {/* Chọn tỉnh thành */}
@@ -141,7 +155,7 @@ const SearchAdvanceScreen = () => {
               }}
             />
             <TextInputBase
-              style={[styles.inputStyle, {width: '100%'}]}
+              style={[styles.inputStyle, { width: '100%' }]}
               // type='numeric'
               onChangeText={value => onChangeTitle(value)}
               placeholder="Nhập từ khoá tiêu đề"
@@ -157,20 +171,108 @@ const SearchAdvanceScreen = () => {
             }}
           >
             <TextBase
-              title={'Địa chỉ'}
+              title={'Chọn Khu Vực'}
               style={{
-                marginBottom: verticalScale(10),
-                marginLeft: verticalScale(20),
+                fontSize: verticalScale(18),
                 fontWeight: 'bold',
+                marginBottom: verticalScale(8),
               }}
             />
-            <TextInputBase
-              style={[styles.inputStyle, {width: '100%'}]}
-              // type='numeric'
-              onChangeText={value => onChangeAddress(value)}
-              placeholder="Nhập khu vực cần tìm"
-              initValue={address || ''}
-            />
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: verticalScale(16)
+            }}>
+              <DropdownList
+                data={Provinces}
+                onSelect={(index: number, item: Province) => {
+                  setProvince(item);
+                  setCity(null)
+                }}
+                touchStyle={{
+                  width: '49%',
+                }}
+                title={'Chọn Tỉnh thành'}
+                filter={true}
+              >
+                <InputBase
+                  style={{ alignSelf: 'center' }}
+                  initValue={''}
+                  onFocus={() => { }}
+                  placeholder={'Chọn Tỉnh '}
+                  type={'NORMAL'}
+                  iconRight={() => {
+                    return <Icon name="times" size={18} />;
+                  }}
+                  iconRightStyle={{
+                    width: verticalScale(14),
+                    height: verticalScale(10),
+                  }}
+                  viewInsert
+                  viewInsertStyle={{ width: verticalScale(150) }}
+                  viewInsertContent={
+                    province ? (
+                      <TextBase
+                        title={province.name}
+                        style={{
+                          color: colors.textColor,
+                        }}
+                      />
+                    ) : (
+                      <TextBase
+                        title={'Chọn Tỉnh thành'}
+                        style={{ color: colors.borderColor }}
+                      />
+                    )
+                  }
+                  pressIconRight={() => { }}
+                />
+              </DropdownList>
+              <DropdownList
+                data={Districts.filter((it: District) => it.provinceId == province?.id)}
+                onSelect={(index: number, item: District) => {
+                  setCity(item);
+                }}
+                touchStyle={{
+                  width: '49%',
+                }}
+                title={'Chọn Quận huyện'}
+                filter={true}
+              >
+                <InputBase
+                  style={{ alignSelf: 'center' }}
+                  initValue={''}
+                  onFocus={() => { }}
+                  placeholder={'Chọn Quận huyện'}
+                  type={'NORMAL'}
+                  iconRight={() => {
+                    return <Icon name="times" size={18} />;
+                  }}
+                  iconRightStyle={{
+                    width: verticalScale(14),
+                    height: verticalScale(10),
+                  }}
+                  viewInsertStyle={{ width: verticalScale(150) }}
+                  viewInsert
+                  viewInsertContent={
+                    city ? (
+                      <TextBase
+                        title={city.name}
+                        style={{ color: colors.textColor, }}
+                      />
+                    ) : (
+                      <TextBase
+                        title={'Chọn Quận huyện'}
+                        style={{ color: colors.borderColor }}
+                      />
+                    )
+                  }
+                  pressIconRight={() => { }}
+                />
+              </DropdownList>
+            </View>
           </View>
           {/* Khoảng giá */}
           <View

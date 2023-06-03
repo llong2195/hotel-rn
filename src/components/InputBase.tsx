@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import {
   Image,
@@ -11,8 +11,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {colors} from '../constants/colors';
-import {verticalScale} from './Scales';
+import { colors } from '../constants/colors';
+import { verticalScale } from './Scales';
 import TextBase from './TextBase';
 
 let _editing = false;
@@ -253,7 +253,7 @@ export default class InputBase extends Component<
   }
 
   render() {
-    const {source, keyScreen, viewInsert} = this.props;
+    const { source, keyScreen, viewInsert } = this.props;
     let color_text_input = this.state.error
       ? colors.inputErrorColor
       : colors.inputColor;
@@ -285,10 +285,10 @@ export default class InputBase extends Component<
           >
             <TextBase
               title={this.props.titleInput}
-              style={[{fontWeight: 'bold'}, this.props.titleInputStyle]}
+              style={[{ fontWeight: 'bold' }, this.props.titleInputStyle]}
             />
             {this.props.require ? (
-              <Text style={{color: 'red'}}> (*) </Text>
+              <Text style={{ color: 'red' }}> (*) </Text>
             ) : null}
           </View>
         ) : null}
@@ -303,14 +303,14 @@ export default class InputBase extends Component<
               borderColor: this.state.error
                 ? colors.warningColor
                 : this.props.borderColor
-                ? this.props.borderColor
-                : colors.inputBorderColor,
+                  ? this.props.borderColor
+                  : colors.inputBorderColor,
             },
             {
               ...this.props.contentStyle,
               borderBottomColor:
                 this.props.contentStyle &&
-                this.props.contentStyle.borderBottomColor
+                  this.props.contentStyle.borderBottomColor
                   ? this.state.error
                     ? colors.warningColor
                     : this.props.contentStyle.borderBottomColor
@@ -318,7 +318,7 @@ export default class InputBase extends Component<
             },
           ]}
         >
-          <View style={[{flexDirection: 'row'}, this.props.viewInputStyle]}>
+          <View style={[{ flexDirection: 'row' }, this.props.viewInputStyle]}>
             <View
               style={{
                 flex: 1,
@@ -339,7 +339,7 @@ export default class InputBase extends Component<
                 {this.props.iconLeft && (
                   <View
                     style={[
-                      {justifyContent: 'flex-start', width: verticalScale(50)},
+                      { justifyContent: 'flex-start', width: verticalScale(50) },
                       this.props.viewIconLeftStyle,
                     ]}
                   >
@@ -412,12 +412,13 @@ export default class InputBase extends Component<
                     value={this.state.text}
                     style={{
                       height: verticalScale(46),
+                      width: '100%',
                       fontSize: verticalScale(16),
                       color: this.state.error
                         ? colors.warningColor
                         : this.props.textInputColor
-                        ? this.props.textInputColor
-                        : color_text_input,
+                          ? this.props.textInputColor
+                          : color_text_input,
                       flex: 1,
                       fontFamily: 'Roboto',
                     }}
@@ -468,8 +469,8 @@ export default class InputBase extends Component<
                       color: this.state.error
                         ? colors.warningColor
                         : this.props.textInputColor
-                        ? this.props.textInputColor
-                        : color_text_input,
+                          ? this.props.textInputColor
+                          : color_text_input,
                       flex: 1,
                       fontFamily: 'Roboto',
                     }}
@@ -531,7 +532,7 @@ export default class InputBase extends Component<
                   </View>
                 ) : null}
                 {viewInsert ? (
-                  <View style={[{width: '100%'}, this.props.viewInsertStyle]}>
+                  <View style={[{ width: '100%' }, this.props.viewInsertStyle]}>
                     {this.props.viewInsertContent}
                   </View>
                 ) : null}
@@ -540,7 +541,7 @@ export default class InputBase extends Component<
             {this.props.iconRight && (
               <View
                 style={[
-                  {justifyContent: 'flex-end', width: verticalScale(50)},
+                  { justifyContent: 'flex-end', width: verticalScale(50) },
                   this.props.viewIconRightStyle,
                 ]}
               >
