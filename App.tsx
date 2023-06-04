@@ -11,24 +11,24 @@
 import React from 'react';
 
 import FlashMessage from 'react-native-flash-message';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 
 // In App.js in a new project
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import CustomLoading from './src/components/Loading';
 import Popup from './src/components/Popup';
 import R from './src/components/R';
-// import ReactotronConfig from './src/config/ReactotronConfig';
+import ReactotronConfig from './src/config/ReactotronConfig';
 import AppNavigator from './src/navigation/AppNavigator';
 import {
   isMountedRef,
   navigationRef,
 } from './src/navigation/NavigationService';
-import {store} from './src/stores';
+import { store } from './src/stores';
 
-// const reactotron = ReactotronConfig.configure();
-// reactotron.clear;
+const reactotron = ReactotronConfig.configure();
+reactotron.clear;
 isMountedRef.current = true;
 
 const App = () => {

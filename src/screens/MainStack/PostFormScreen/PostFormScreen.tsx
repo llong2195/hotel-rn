@@ -25,10 +25,14 @@ import R from '../../../components/R';
 import {verticalScale} from '../../../components/Scales';
 import TextBase from '../../../components/TextBase';
 import {colors, PostType} from '../../../constants';
+import {Districts} from '../../../constants/Data/Districts';
+import {Provinces} from '../../../constants/Data/Province';
 import {WageUnitData} from '../../../constants/Data/WageUnit';
 import {Commune} from '../../../entities/Commune';
 import {WageUnit} from '../../../entities/DataType';
+import {District} from '../../../entities/District';
 import {Posts} from '../../../entities/Post';
+import {Province} from '../../../entities/Province';
 import NavigationService from '../../../navigation/NavigationService';
 import postServices from '../../../services/PostServices';
 import {useAppDispatch, useAppSelector} from '../../../stores';
@@ -55,6 +59,8 @@ const PostFormScreen = (props: Props) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [visibleReport, setVisibleReport] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<string>('');
+  const [province, setProvince] = useState<any>(null);
+  const [city, setCity] = useState<any>(null);
   useEffect(() => {
     setData();
   }, []);
@@ -64,8 +70,21 @@ const PostFormScreen = (props: Props) => {
       setIsUpdate(true);
       const {data}: {data: Posts} = props.route.params;
       R.Loading.show();
+      const addr = data.address.split(',');
       setTitle(data.title);
-      setAddress(data.address);
+      setAddress(addr?.[0]);
+      setProvince(
+        Provinces.find((it: Province) => it.name == addr?.[1]) || {
+          id: 0,
+          name: addr?.[1],
+        },
+      );
+      setCity(
+        Districts.find((it: District) => it.name == addr?.[1]) || {
+          id: 0,
+          name: addr?.[2],
+        },
+      );
       setDetail(data.detail);
       setPostType(data.postType);
       setPrice(data.price?.toString() || '');
@@ -77,6 +96,8 @@ const PostFormScreen = (props: Props) => {
       R.Loading.hide();
     }
   };
+  console.log('pro', province, city);
+
   const onChangeTitleText = (text: string) => {
     setTitle(text);
   };
@@ -107,6 +128,15 @@ const PostFormScreen = (props: Props) => {
     if (!address) {
       R.showMessage({
         message: 'Chưa điền địa chỉ tin',
+        type: 'danger',
+        icon: 'danger',
+        autoHide: true,
+      });
+      return;
+    }
+    if (!province || !city) {
+      R.showMessage({
+        message: 'Chưa điền khu vực',
         type: 'danger',
         icon: 'danger',
         autoHide: true,
@@ -161,7 +191,7 @@ const PostFormScreen = (props: Props) => {
         detail,
         price: price?.split(/[,.\s]/).join('') || undefined,
         time_unit: wageUnit.id,
-        address,
+        address: `${address},${city.name},${province.name}`,
         postType,
         image: images.toString(),
       };
@@ -227,7 +257,7 @@ const PostFormScreen = (props: Props) => {
         detail,
         minPrice: minPrice?.split(/[,.\s]/).join('') || undefined,
         maxPrice: maxPrice?.split(/[,.\s]/).join('') || undefined,
-        address,
+        address: `${address},${province.name},${city.name}`,
         postType,
         image: images.toString(),
       };
@@ -309,8 +339,7 @@ const PostFormScreen = (props: Props) => {
                 right: 20,
                 zIndex: 10000,
               }}
-              onPress={() => setVisibleReport(false)}
-            >
+              onPress={() => setVisibleReport(false)}>
               <Icon name="times" size={verticalScale(18)} color={'white'} />
             </TouchableOpacity>
             <Image
@@ -374,8 +403,7 @@ const PostFormScreen = (props: Props) => {
               <RadioButton
                 labelHorizontal={true}
                 key={i}
-                style={{justifyContent: 'center', alignItems: 'center'}}
-              >
+                style={{justifyContent: 'center', alignItems: 'center'}}>
                 {/*  You can set RadioButtonLabel before RadioButtonInput */}
                 <RadioButtonInput
                   obj={obj}
@@ -426,50 +454,156 @@ const PostFormScreen = (props: Props) => {
           placeholderTextColor={colors.grayColor}
         />
         {/* -------Địa chỉ---------- */}
-        {postType == PostType.POST ? (
-          <>
-            <TextBase
-              title={'Địa chỉ'}
-              style={{
-                fontSize: verticalScale(18),
-                fontWeight: 'bold',
-                marginBottom: verticalScale(8),
-              }}
-            />
-            {/* <TextInputBase
+        <>
+          {postType == PostType.POST ? (
+            <>
+              <TextBase
+                title={'Địa chỉ'}
+                style={{
+                  fontSize: verticalScale(18),
+                  fontWeight: 'bold',
+                  marginBottom: verticalScale(8),
+                }}
+              />
+              {/* <TextInputBase
                             style={styles.inputStyle}
                             // type='numeric'
                             onChangeText={onChangeAddressText}
                             placeholder='Nhập địa chỉ'
                             initValue={address}
                         /> */}
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={text => onChangeAddressText(text)}
-              value={address}
-              placeholder="Nhập địa chỉ"
-              placeholderTextColor={colors.grayColor}
-            />
-          </>
-        ) : (
-          <>
-            <TextBase
-              title={'Địa chỉ cần tìm kiếm'}
-              style={{
-                fontSize: verticalScale(18),
-                fontWeight: 'bold',
-                marginBottom: verticalScale(8),
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={text => onChangeAddressText(text)}
+                value={address}
+                placeholder="Nhập địa chỉ"
+                placeholderTextColor={colors.grayColor}
+              />
+            </>
+          ) : (
+            <>
+              <TextBase
+                title={'Địa chỉ cần tìm kiếm'}
+                style={{
+                  fontSize: verticalScale(18),
+                  fontWeight: 'bold',
+                  marginBottom: verticalScale(8),
+                }}
+              />
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={text => onChangeAddressText(text)}
+                value={address}
+                placeholder="Nhập địa chỉ"
+                placeholderTextColor={colors.grayColor}
+              />
+            </>
+          )}
+          <TextBase
+            title={'Chọn Khu Vực'}
+            style={{
+              fontSize: verticalScale(18),
+              fontWeight: 'bold',
+              marginBottom: verticalScale(8),
+            }}
+          />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: verticalScale(16),
+            }}>
+            <DropdownList
+              data={Provinces}
+              onSelect={(index: number, item: Province) => {
+                setProvince(item);
+                setCity(null);
               }}
-            />
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={text => onChangeAddressText(text)}
-              value={address}
-              placeholder="Nhập địa chỉ"
-              placeholderTextColor={colors.grayColor}
-            />
-          </>
-        )}
+              touchStyle={{
+                width: '49%',
+              }}
+              title={'Chọn Tỉnh thành'}
+              filter={true}>
+              <InputBase
+                style={{alignSelf: 'center'}}
+                initValue={''}
+                onFocus={() => {}}
+                placeholder={'Chọn Tỉnh '}
+                type={'NORMAL'}
+                iconRight={() => {
+                  return <Icon name="times" size={18} />;
+                }}
+                iconRightStyle={{
+                  width: verticalScale(14),
+                  height: verticalScale(10),
+                }}
+                viewInsert
+                viewInsertStyle={{width: verticalScale(150)}}
+                viewInsertContent={
+                  province ? (
+                    <TextBase
+                      title={province.name}
+                      style={{
+                        color: colors.textColor,
+                      }}
+                    />
+                  ) : (
+                    <TextBase
+                      title={'Chọn Tỉnh thành'}
+                      style={{color: colors.borderColor}}
+                    />
+                  )
+                }
+                pressIconRight={() => {}}
+              />
+            </DropdownList>
+            <DropdownList
+              data={Districts.filter(
+                (it: District) => it.provinceId == province?.id,
+              )}
+              onSelect={(index: number, item: District) => {
+                setCity(item);
+              }}
+              touchStyle={{
+                width: '49%',
+              }}
+              title={'Chọn Quận huyện'}
+              filter={true}>
+              <InputBase
+                style={{alignSelf: 'center'}}
+                initValue={''}
+                onFocus={() => {}}
+                placeholder={'Chọn Quận huyện'}
+                type={'NORMAL'}
+                iconRight={() => {
+                  return <Icon name="times" size={18} />;
+                }}
+                iconRightStyle={{
+                  width: verticalScale(14),
+                  height: verticalScale(10),
+                }}
+                viewInsertStyle={{width: verticalScale(150)}}
+                viewInsert
+                viewInsertContent={
+                  city ? (
+                    <TextBase
+                      title={city.name}
+                      style={{color: colors.textColor}}
+                    />
+                  ) : (
+                    <TextBase
+                      title={'Chọn Quận huyện'}
+                      style={{color: colors.borderColor}}
+                    />
+                  )
+                }
+                pressIconRight={() => {}}
+              />
+            </DropdownList>
+          </View>
+        </>
         {/* -------Price------------ */}
         {postType == PostType.POST ? (
           <>
@@ -482,8 +616,7 @@ const PostFormScreen = (props: Props) => {
               }}
             />
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}
-            >
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TextInput
                 style={[
                   styles.inputStyle,
@@ -500,11 +633,10 @@ const PostFormScreen = (props: Props) => {
                   setWageUnit(item);
                 }}
                 touchStyle={{
-                  width: '40%',
+                  width: '49%',
                 }}
                 title={'Thời gian đóng tiền'}
-                filter={true}
-              >
+                filter={true}>
                 <InputBase
                   style={{alignSelf: 'center'}}
                   initValue={''}
@@ -553,8 +685,7 @@ const PostFormScreen = (props: Props) => {
                 // borderWidth: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}
-            >
+              }}>
               {/* <TextInputBase
                                 style={styles.priceInput}
                                 // type='numeric'
@@ -656,8 +787,7 @@ const PostFormScreen = (props: Props) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: verticalScale(16),
-                }}
-              >
+                }}>
                 <Icon name="upload3" size={verticalScale(50)} />
               </TouchableOpacity>
 
@@ -674,8 +804,7 @@ const PostFormScreen = (props: Props) => {
                         paddingTop: verticalScale(10),
                         // borderWidth:1
                         // marginRight: verticalScale(8),
-                      }}
-                    >
+                      }}>
                       <TouchableOpacity
                         style={{
                           width: verticalScale(20),
@@ -690,8 +819,7 @@ const PostFormScreen = (props: Props) => {
                           right: -10,
                           zIndex: 10000,
                         }}
-                        onPress={() => deleteImage(index)}
-                      >
+                        onPress={() => deleteImage(index)}>
                         <Icon name="times" size={verticalScale(18)} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => tapImage(item)}>
@@ -718,8 +846,7 @@ const PostFormScreen = (props: Props) => {
                         flexDirection: 'column',
                         marginBottom: verticalScale(8),
                         // marginRight: verticalScale(8),
-                      }}
-                    >
+                      }}>
                       <TouchableOpacity
                         style={{
                           width: verticalScale(20),
@@ -734,8 +861,7 @@ const PostFormScreen = (props: Props) => {
                           right: -10,
                           zIndex: 10000,
                         }}
-                        onPress={() => {}}
-                      >
+                        onPress={() => {}}>
                         <Icon name="times" size={verticalScale(18)} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => tapImage(item)}>
