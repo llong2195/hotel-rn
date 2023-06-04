@@ -94,7 +94,8 @@ const SearchAdvanceScreen = () => {
               width: '100%',
               height: verticalScale(375),
             }}
-            title={'Loại bài đăng'}>
+            title={'Loại bài đăng'}
+          >
             <InputBase
               titleInput={'Loại bài đăng'}
               style={{
@@ -138,7 +139,8 @@ const SearchAdvanceScreen = () => {
               // borderWidth: 1,
               marginHorizontal: verticalScale(20),
               marginTop: verticalScale(30),
-            }}>
+            }}
+          >
             <TextBase
               title={'Từ khoá tiêu đề'}
               style={{
@@ -161,7 +163,8 @@ const SearchAdvanceScreen = () => {
               // borderWidth: 1,
               marginHorizontal: verticalScale(20),
               marginTop: verticalScale(30),
-            }}>
+            }}
+          >
             <TextBase
               title={'Chọn Khu Vực'}
               style={{
@@ -177,7 +180,8 @@ const SearchAdvanceScreen = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 marginBottom: verticalScale(16),
-              }}>
+              }}
+            >
               <DropdownList
                 data={Provinces}
                 onSelect={(index: number, item: Province) => {
@@ -188,7 +192,8 @@ const SearchAdvanceScreen = () => {
                   width: '49%',
                 }}
                 title={'Chọn Tỉnh thành'}
-                filter={true}>
+                filter={true}
+              >
                 <InputBase
                   style={{alignSelf: 'center'}}
                   initValue={''}
@@ -233,7 +238,8 @@ const SearchAdvanceScreen = () => {
                   width: '49%',
                 }}
                 title={'Chọn Quận huyện'}
-                filter={true}>
+                filter={true}
+              >
                 <InputBase
                   style={{alignSelf: 'center'}}
                   initValue={''}
@@ -273,7 +279,8 @@ const SearchAdvanceScreen = () => {
               // borderWidth: 1,
               marginHorizontal: verticalScale(20),
               marginTop: verticalScale(30),
-            }}>
+            }}
+          >
             <TextBase
               title={'Khoảng giá'}
               style={{
@@ -288,7 +295,8 @@ const SearchAdvanceScreen = () => {
                 // borderWidth: 1,
                 alignItems: 'center',
                 justifyContent: 'space-between',
-              }}>
+              }}
+            >
               <TextInputBase
                 style={styles.inputStyle}
                 // type='numeric'
