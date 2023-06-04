@@ -74,15 +74,15 @@ const PostFormScreen = (props: Props) => {
       setTitle(data.title);
       setAddress(addr?.[0]);
       setProvince(
-        Provinces.find((it: Province) => it.name == addr?.[1]) || {
+        Provinces.find((it: Province) => it.name == addr?.[2]) || {
           id: 0,
-          name: addr?.[1],
+          name: addr?.[2],
         },
       );
       setCity(
-        Districts.find((it: District) => it.name == addr?.[1]) || {
+        Districts.find((it: District) => it.name == addr?.[2]) || {
           id: 0,
-          name: addr?.[2],
+          name: addr?.[1],
         },
       );
       setDetail(data.detail);
@@ -339,7 +339,8 @@ const PostFormScreen = (props: Props) => {
                 right: 20,
                 zIndex: 10000,
               }}
-              onPress={() => setVisibleReport(false)}>
+              onPress={() => setVisibleReport(false)}
+            >
               <Icon name="times" size={verticalScale(18)} color={'white'} />
             </TouchableOpacity>
             <Image
@@ -403,7 +404,8 @@ const PostFormScreen = (props: Props) => {
               <RadioButton
                 labelHorizontal={true}
                 key={i}
-                style={{justifyContent: 'center', alignItems: 'center'}}>
+                style={{justifyContent: 'center', alignItems: 'center'}}
+              >
                 {/*  You can set RadioButtonLabel before RadioButtonInput */}
                 <RadioButtonInput
                   obj={obj}
@@ -514,7 +516,8 @@ const PostFormScreen = (props: Props) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               marginBottom: verticalScale(16),
-            }}>
+            }}
+          >
             <DropdownList
               data={Provinces}
               onSelect={(index: number, item: Province) => {
@@ -525,7 +528,8 @@ const PostFormScreen = (props: Props) => {
                 width: '49%',
               }}
               title={'Chọn Tỉnh thành'}
-              filter={true}>
+              filter={true}
+            >
               <InputBase
                 style={{alignSelf: 'center'}}
                 initValue={''}
@@ -570,7 +574,8 @@ const PostFormScreen = (props: Props) => {
                 width: '49%',
               }}
               title={'Chọn Quận huyện'}
-              filter={true}>
+              filter={true}
+            >
               <InputBase
                 style={{alignSelf: 'center'}}
                 initValue={''}
@@ -616,7 +621,8 @@ const PostFormScreen = (props: Props) => {
               }}
             />
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}
+            >
               <TextInput
                 style={[
                   styles.inputStyle,
@@ -636,7 +642,8 @@ const PostFormScreen = (props: Props) => {
                   width: '49%',
                 }}
                 title={'Thời gian đóng tiền'}
-                filter={true}>
+                filter={true}
+              >
                 <InputBase
                   style={{alignSelf: 'center'}}
                   initValue={''}
@@ -685,7 +692,8 @@ const PostFormScreen = (props: Props) => {
                 // borderWidth: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}>
+              }}
+            >
               {/* <TextInputBase
                                 style={styles.priceInput}
                                 // type='numeric'
@@ -787,7 +795,8 @@ const PostFormScreen = (props: Props) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: verticalScale(16),
-                }}>
+                }}
+              >
                 <Icon name="upload3" size={verticalScale(50)} />
               </TouchableOpacity>
 
@@ -804,7 +813,8 @@ const PostFormScreen = (props: Props) => {
                         paddingTop: verticalScale(10),
                         // borderWidth:1
                         // marginRight: verticalScale(8),
-                      }}>
+                      }}
+                    >
                       <TouchableOpacity
                         style={{
                           width: verticalScale(20),
@@ -819,7 +829,8 @@ const PostFormScreen = (props: Props) => {
                           right: -10,
                           zIndex: 10000,
                         }}
-                        onPress={() => deleteImage(index)}>
+                        onPress={() => deleteImage(index)}
+                      >
                         <Icon name="times" size={verticalScale(18)} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => tapImage(item)}>
@@ -846,7 +857,8 @@ const PostFormScreen = (props: Props) => {
                         flexDirection: 'column',
                         marginBottom: verticalScale(8),
                         // marginRight: verticalScale(8),
-                      }}>
+                      }}
+                    >
                       <TouchableOpacity
                         style={{
                           width: verticalScale(20),
@@ -861,7 +873,8 @@ const PostFormScreen = (props: Props) => {
                           right: -10,
                           zIndex: 10000,
                         }}
-                        onPress={() => {}}>
+                        onPress={() => {}}
+                      >
                         <Icon name="times" size={verticalScale(18)} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => tapImage(item)}>
